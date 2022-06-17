@@ -27,101 +27,103 @@ class _CalculatorState extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple[100],
-
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(height: 50,),
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    alignment: Alignment.centerLeft,
-                    child: Text(UserQuestion,style: TextStyle(fontSize: 20),)
-                    ),
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    alignment: Alignment.centerRight,
-                    child: Text(UserAnswer,style: TextStyle(fontSize: 50),)
-                    ),
-                ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+    
+        body: Column(
+          children: [
+            Expanded(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(height: 50,),
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      alignment: Alignment.centerLeft,
+                      child: Text(UserQuestion,style: TextStyle(fontSize: 30),)
+                      ),
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      alignment: Alignment.centerRight,
+                      child: Text(UserAnswer,style: TextStyle(fontSize: 50),)
+                      ),
+                  ],
+                ),
+    
               ),
-
             ),
-          ),
-          Expanded(
-            flex: 2, //2 times greater than top portion
-            child: Container(
-              child: GridView.builder(
-               itemCount: btns.length,
-               gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-               itemBuilder: (BuildContext context, int index){
-               
-               //Clear Button
-               if (index==0)
-               {
-                  return Buttons(
-                  ButtonTapped: (){
-                    setState(() {
-                      UserQuestion='';
-                    });
-                  },
-                  ButtonText:btns[index] ,
-                  Color_b:  Colors.green,
-                  TextColor: Colors.white 
-                );
-               }
-               //Delete Button
-               else if(index==1)
-               {
-                  return Buttons(
-                  ButtonTapped: (){
-                    setState(() {
-                      UserQuestion = UserQuestion.substring(0,UserQuestion.length-1);
-                    });
-                  },
-                  ButtonText:btns[index] ,
-                  Color_b:  Colors.red,
-                  TextColor: Colors.white
+            Expanded(
+              flex: 2, //2 times greater than top portion
+              child: Container(
+                child: GridView.builder(
+                 itemCount: btns.length,
+                 gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+                 itemBuilder: (BuildContext context, int index){
+                 
+                 //Clear Button
+                 if (index==0)
+                 {
+                    return Buttons(
+                    ButtonTapped: (){
+                      setState(() {
+                        UserQuestion='';
+                      });
+                    },
+                    ButtonText:btns[index] ,
+                    Color_b:  Colors.green,
+                    TextColor: Colors.white 
                   );
-               }
-               //Equals Button
-               else if(index==btns.length-1)
-               {
-                  return Buttons(
-                  ButtonTapped: (){
-                    setState(() {
-                      EqualPressed();
-                    });
-                  },
-                  ButtonText:btns[index] ,
-                  Color_b:  Colors.deepPurple,
-                  TextColor: Colors.white
+                 }
+                 //Delete Button
+                 else if(index==1)
+                 {
+                    return Buttons(
+                    ButtonTapped: (){
+                      setState(() {
+                        UserQuestion = UserQuestion.substring(0,UserQuestion.length-1);
+                      });
+                    },
+                    ButtonText:btns[index] ,
+                    Color_b:  Colors.red,
+                    TextColor: Colors.white
+                    );
+                 }
+                 //Equals Button
+                 else if(index==btns.length-1)
+                 {
+                    return Buttons(
+                    ButtonTapped: (){
+                      setState(() {
+                        EqualPressed();
+                      });
+                    },
+                    ButtonText:btns[index] ,
+                    Color_b:  Colors.deepPurple,
+                    TextColor: Colors.white
+                    );
+                 }
+                 else
+                 {
+                   return Buttons(
+                    ButtonTapped: (){
+                      setState(() {
+                        UserQuestion += btns[index];   
+                      });
+                      
+                    },
+                    ButtonText:btns[index] ,
+                    Color_b: IsOperator(btns[index]) ? Colors.deepPurple : Colors.deepPurple[100],
+                    TextColor: IsOperator(btns[index])? Colors.white : Colors.deepPurple 
                   );
-               }
-               else
-               {
-                 return Buttons(
-                  ButtonTapped: (){
-                    setState(() {
-                      UserQuestion += btns[index];   
-                    });
-                    
-                  },
-                  ButtonText:btns[index] ,
-                  Color_b: IsOperator(btns[index]) ? Colors.deepPurple : Colors.deepPurple[50],
-                  TextColor: IsOperator(btns[index])? Colors.white : Colors.deepPurple 
-                );
-               }
-               }),
-
+                 }
+                 }),
+    
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
